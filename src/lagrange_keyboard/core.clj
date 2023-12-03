@@ -193,8 +193,8 @@
                    [[:key, 0 0, 0 1]
                     [:key, 0 0, -1/2 1]]
 
-                   [[:key, 0 1, -1 -1]     ; Left side
-                    [:key, 0 2, -1 1]]
+                   ; [[:key, 0 1, -1 -1]     ; Left side (removed for side controller mount)
+                   ;  [:key, 0 2, -1 1]]
 
                    [[:key, 0 3, -1 -1]
                     [:thumb, 1 0, -1 1]]
@@ -2294,10 +2294,11 @@
              (union
               (translate [0 0 (- 1 cover-thickness)]
                          (case-placed-shapes cover-shard))
-              (pcb-place-properly pcb-bosses))
+              ; (pcb-place-properly pcb-bosses)
+              )
 
-             (pcb-place-properly pcb-connector-cutout)
-             (pcb-place-properly @pcb-button-hole-cutout)
+             ; (pcb-place-properly pcb-connector-cutout)
+             ; (pcb-place-properly @pcb-button-hole-cutout)
 
              (binding [wall-thickness (+ wall-thickness δ)
                        screw-boss-radius (+ screw-boss-radius (/ δ 2))
