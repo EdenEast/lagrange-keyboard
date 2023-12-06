@@ -89,13 +89,13 @@
 
 (def column-offset #(case %
                       (0 1) 0
-                      2 8
+                      2 6
                       3 0
-                      -14))
+                      -12))
 
 (def column-height #(case %
                       (0 1) 0
-                      2 -5
+                      2 -4
                       3 0
                       7))
 
@@ -105,13 +105,14 @@
 
 ;; Palm key location tuning offsets, in mm.
 
-(def palm-key-offset [0 -1 -3])
+; (def palm-key-offset [0 -1 -3])
+(def palm-key-offset [-3 -5 2])
 
 ;; Key plate (i.e. switch mount) parameters.
 
 (def keycap-length (* 0.725 25.4))  ; This is essentially 1u in mm.
 (def plate-size keycap-length)
-(def plate-thickness 3)             ; Units of mm.
+(def plate-thickness 5)             ; Units of mm.
 (def plate-hole-size 14)
 
 ;; Place nubs at the switch mount hole edges, meant to engage the tabs
