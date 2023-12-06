@@ -1500,14 +1500,16 @@
   (let [offsets (map (fn [a b] (or a b))
                      [dx dy dz]
                      (case where
-                       :back [0 0 -15]
+                       ; :back [0 10 -15]
+                       :back [0 5 -15]
                        :right (case [j y]
                                 [0 1] [-1/4 -5/2 -5/2]
                                 [3 -1] [-3/8 3/2 -19/8]
                                 [4 1] [-3/8 -3/2 -19/8]
                                 [4 -1] [-1/4 1/4 -5/2]
                                 [-1/4 0 -5/2])
-                       :left [0 (case [j y]
+                       ; :left [0 (case [j y]
+                       :left [-5 (case [j y]
                                   [3 -1] 2
                                   0) -15]
                        :front (if (= [i j, x y] [3 (row -1), -1 -1])
@@ -2276,11 +2278,8 @@
           (concat
            ;; Main section
 
-           ;; Attempt to take difference of keys and switch pcb's
-           (apply difference
-                  (apply union
-                         @connectors (key-placed-shapes key-plate))
-                  (key-placed-shapes switch-pcb))
+          @connectors
+          (key-placed-shapes key-plate)
 
            ;; Thumb section
 
@@ -2294,7 +2293,32 @@
              (list*
               (apply difference (apply union (case-placed-shapes screw-boss))
                      (case-placed-shapes screw-thread))
-              (case-placed-shapes (partial wall-brace wall-sections)))))))
+              (case-placed-shapes (partial wall-brace wall-sections))))
+           )))
+
+       (when (place-part? :keypcb)
+         (let [
+               full-model (list*
+                            (concat
+                              @connectors
+                              (key-placed-shapes key-plate)
+                              @thumb-connectors
+                              (thumb-placed-shapes key-plate))
+                            (list*
+                              (apply difference (apply union (case-placed-shapes screw-boss))
+                                      (case-placed-shapes screw-thread))
+                              (case-placed-shapes (partial wall-brace wall-sections))))
+               keyswitch-pcb (list*
+                               (concat
+                                 (key-placed-shapes switch-pcb)
+                                 (thumb-placed-shapes switch-pcb)))
+            ]
+           keyswitch-pcb
+
+           ; (apply union
+           ;   full-model
+           ;   keyswitch-pcb)
+           ))
 
        (when (place-part? :bottom)
          (intersection
@@ -2502,6 +2526,8 @@
                             (write-scad (xform (assembly :right :stand) +)))
         "right-boot" (spit "things/right-boot.scad"
                            (write-scad (xform (assembly :right :boot) +)))
+        "right-keypcb" (spit "things/right-keypcb.scad"
+                     (write-scad (assembly :right :keypcb)))
         "right-subassembly" (spit "things/right-subassembly.scad"
                             (write-scad (assembly :right :top :bottom)))
         "right-assembly" (spit "things/right-assembly.scad"
@@ -2514,6 +2540,8 @@
                            (write-scad (xform (assembly :left :stand) -)))
         "left-boot" (spit "things/left-boot.scad"
                           (write-scad (xform (assembly :left :boot) -)))
+        "left-keypcb" (spit "things/left-keypcb.scad"
+                     (write-scad (assembly :left :keypcb)))
         "left-subassembly" (spit "things/left-subassembly.scad"
                             (write-scad (assembly :left :top :bottom)))
         "left-assembly" (spit "things/left-assembly.scad"
