@@ -807,6 +807,14 @@
            (translate [3.81 -2.54 -5.85]
                       (cube 1.5 0.2 4))))))
 
+(defn switch-pcb [where, i j]
+  (orient-keyswitch
+   where, i j
+   (union
+     (color [0.2 0.2 0.3]
+            (translate [0 0 -7]
+                       (cube 18.1 20.1 3.5))))))
+
 ;; A basic keycap shape.  Cylindrical sides, spherical top, rounded
 ;; corners.  Can be configured to yield SA and DSA style keycaps.
 ;; Additionally supports a couple more exotic shapes.
@@ -2249,8 +2257,11 @@
                      (when place-keyswitches?
                        (concat
                         (key-placed-shapes keyswitch)
+                        (key-placed-shapes switch-pcb)
                         (when build-thumb-section?
-                          (thumb-placed-shapes keyswitch))))
+                          (thumb-placed-shapes keyswitch)
+                          (thumb-placed-shapes switch-pcb)
+                          )))
 
                      (when place-keycaps?
                        (concat
@@ -2264,8 +2275,11 @@
           (concat
            ;; Main section
 
-           @connectors
-           (key-placed-shapes key-plate)
+           ;; Attempt to take difference of keys and switch pcb's
+           (apply difference
+                  (apply union
+                         @connectors (key-placed-shapes key-plate))
+                  (key-placed-shapes switch-pcb))
 
            ;; Thumb section
 
