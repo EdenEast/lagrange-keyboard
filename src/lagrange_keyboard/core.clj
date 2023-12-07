@@ -43,8 +43,8 @@
 (def case-color [0.70588 0.69804 0.67059])
 (def interference-test-build? false)
 (def thumb-test-build? false)
-(def key-test-build? false)
-(def key-test-range [1 2, 4 4])
+(def key-test-build? true)
+(def key-test-range [0 1, 5 4])
 
 ;; Main section parameters.
 
@@ -106,7 +106,7 @@
 ;; Palm key location tuning offsets, in mm.
 
 ; (def palm-key-offset [0 -1 -3])
-(def palm-key-offset [-3 -5 2])
+(def palm-key-offset [-5 -3 -1])
 
 ;; Key plate (i.e. switch mount) parameters.
 
@@ -497,6 +497,36 @@
           (map (partial - (* 5 N)) [-1 (* i 5) (* (inc i) 5)]))
 
         [(map (partial - (* 5 N)) (conj (range 4 -1 -1) -1 0))])))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;; Controller holder ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+
+(def controller-position [-108 0 cover-thickness / 2])       ; Controller mount location.
+(def controller-size [30 60])
+(def controller-tickness 1.6)
+(def controller-guide-tickness 1.6)
+
+(defn controller-place [flip? shape]
+  (cond->> shape
+    ; flip? (translate (map * [0 -1] controller-size ))
+    ; flip? (translate (map * [0 -1] [10 10] ))
+
+    (not flip?) (mirror [0 1 0])
+    true (mirror [0 0 1]) ;; from bottom to top
+
+    true (rotate [0 π 0])
+    true (translate controller-position)))
+
+
+(def promicro-holder
+  (union
+    (->> (square 10 10)
+         (extrude-linear {:height  controller-guide-tickness
+                          :center false})
+         )
+    (->> (cube 1 1 1 :center false))
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Controller board ;;
@@ -2251,7 +2281,8 @@
         maybe-cut-out (if case-test-build?
                         (partial intersection (apply hull (case-placed-shapes case-test-cutout)))
                         identity)
-        pcb-place-properly (partial pcb-place left?)]
+        pcb-place-properly (partial pcb-place left?)
+        controller-place-properly (partial controller-place left?) ]
     (mirror
      [(if left? 1 0) 0 0]
      (maybe-cut-out
@@ -2333,6 +2364,7 @@
              (union
               (translate [0 0 (- 1 cover-thickness)]
                          (case-placed-shapes cover-shard))
+              ; (controller-place-properly promicro-holder)
               ; (pcb-place-properly pcb-bosses)
               )
 
