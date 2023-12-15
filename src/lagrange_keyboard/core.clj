@@ -2276,25 +2276,30 @@
        (when (place-part? :top)
          (apply
           (if case-color (partial color case-color) union)
-          (concat
-           ;; Main section
+          ;; Issue here... Trying to take the difference between the resulting model and the keyswitch-pcb's
+          (apply difference
+            (concat
+              ;; Main section
 
-           @connectors
-           (key-placed-shapes key-plate)
+              @connectors (key-placed-shapes key-plate)
 
-           ;; Thumb section
+              ;; Thumb section
 
-           (when build-thumb-section?
-             (concat @thumb-connectors
-                     (thumb-placed-shapes key-plate)))
+              (when build-thumb-section?
+                (concat @thumb-connectors
+                        (thumb-placed-shapes key-plate)))
 
-           ;; Case walls
+              ;; Case walls
 
-           (when-not (or thumb-test-build? key-test-build?)
-             (list*
-              (apply difference (apply union (case-placed-shapes screw-boss))
-                     (case-placed-shapes screw-thread))
-              (case-placed-shapes (partial wall-brace wall-sections)))))))
+              (when-not (or thumb-test-build? key-test-build?)
+                (list*
+                  (apply difference (apply union (case-placed-shapes screw-boss))
+                        (case-placed-shapes screw-thread))
+                  (case-placed-shapes (partial wall-brace wall-sections)))))
+            (apply union
+                   (key-placed-shapes switch-pcb)
+                   (thumb-placed-shapes switch-pcb))
+          )))
 
        (when (place-part? :bottom)
          (intersection
