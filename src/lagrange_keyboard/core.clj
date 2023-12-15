@@ -34,6 +34,7 @@
 (def place-keycaps? false)
 (def keys-depressed? false)
 (def place-keyswitches? false)
+(def place-keyswitch-pcb? true)
 (def place-pcb? false)
 (def draft? true)
 (def mock-threads? true)
@@ -1159,6 +1160,14 @@
             [1])]
     (key-place :thumb, i j, 0 0 0, shape)))
 
+(defn switch-pcb [where, i j]
+  (orient-keyswitch
+    where, i j
+    (union
+     (color [0.2 0.2 0.3]
+            (translate [0 0 -6]
+                       (cube 18.0 18.2 2))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;; Connecting tissue ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
@@ -2251,6 +2260,12 @@
                         (key-placed-shapes keyswitch)
                         (when build-thumb-section?
                           (thumb-placed-shapes keyswitch))))
+
+                     (when place-keyswitch-pcb?
+                       (concat
+                        (key-placed-shapes switch-pcb)
+                        (when build-thumb-section?
+                          (thumb-placed-shapes switch-pcb))))
 
                      (when place-keycaps?
                        (concat
