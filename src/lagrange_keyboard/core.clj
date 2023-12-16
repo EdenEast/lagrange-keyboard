@@ -199,8 +199,8 @@
                    [[:key, 0 3, -1 -1]
                     [:thumb, 1 0, -1 1]]
 
-                   [[:thumb, 2 1, -1 1]    ; Front side
-                    [:thumb, 2 1, -1 -1]]
+                   ; [[:thumb, 2 1, -1 1]    ; Front side
+                   ;  [:thumb, 2 1, -1 -1]]
 
                    [[:thumb, 0 1, 1 1]
                     [:thumb, 0 1, 1 -1]]
