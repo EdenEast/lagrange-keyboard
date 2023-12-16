@@ -423,10 +423,16 @@
   ;; to allow more room for keycaps.
 
   (let [stretch (if (not= where :thumb)
-                  (cond
-                    (or (and (= i 2) (not= j (row -1)))
-                        (and (= i 3) (pos? x))) [6/5 1 1]
-                    :else [1 1 1])
+                  [(cond
+                     (or (and (= i 2) (not= j (row -1)))
+                         (and (= i 3) (pos? x))) 6/5
+                     (= i 0) 1.1 ;; Increase inner col place width for extra working space
+                     :else 1)
+                   (cond
+                     (= j 0) 1.2 ;; Increase top row height for keyswitch pcb clearance
+                     (= [i j] [0 3]) 1.1 ;; Increase inner col last row's height
+                     :else 1)
+                   1]
 
                   (cond
                     (and (= [i j] [0 0]) (neg? x) (pos? y)) [1 1.1 1]
