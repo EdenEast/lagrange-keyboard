@@ -111,7 +111,7 @@
 
 (def keycap-length (* 0.725 25.4))  ; This is essentially 1u in mm.
 (def plate-size keycap-length)
-(def plate-thickness 5)             ; Units of mm.
+(def plate-thickness 3)             ; Units of mm.
 (def plate-hole-size 14)
 
 ;; Place nubs at the switch mount hole edges, meant to engage the tabs
@@ -1636,7 +1636,7 @@
 
       (boss-place x 0 endpoints (cylinder screw-boss-radius
                                           (+ screw-boss-height
-                                             (- (* 2 screw-boss-radius)
+                                             (- (* 1.2 screw-boss-radius) ; 2
                                                 (/ wall-thickness 2)))
                                           :center false)))
 
