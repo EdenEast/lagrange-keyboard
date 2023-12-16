@@ -134,8 +134,12 @@
 
 (defn thumb-key-phase [column row]
   (case row
-    (1 2) (degrees -37/2 111/2)
+    ;; Original
+    (1 2) (degrees -37/2 111/2) ; -18.5  55.5
     (degrees (if (zero? column) 12 10) 55/2)))
+    ;; slightly rotated down to make the extra middle finger key not catch
+    ; (1 2) (degrees -16.5 55.5)
+    ; (degrees (if (zero? column) 14 12) 27.5)))
 
 ;; Per-key offset from the baseline arc, in mm.
 
