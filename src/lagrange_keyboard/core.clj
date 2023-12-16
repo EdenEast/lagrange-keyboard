@@ -158,7 +158,7 @@
 
 ;; Height offset for the whole keyboard.
 
-(def global-z-offset 0)
+(def global-z-offset 4) ;; 0
 
 ;; Case-related parameters.
 
