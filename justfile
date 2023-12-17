@@ -75,10 +75,10 @@ misc:
   for part in {{misc}}; do just _misc $part; done
 
 _genreate part *args="":
-  lein run {{part}} {{args}} --no-draft --no-mock-threads
+  lein run {{part}} {{args}} --no-draft
 
 _bridge part *args="":
-  lein run bridge/{{part}} {{args}} --no-draft --no-mock-threads
+  lein run bridge/{{part}} {{args}} --no-draft
   @cp things/bridge.scad things/bridge-{{part}}.scad
 
 _misc part *args="":
