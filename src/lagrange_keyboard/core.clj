@@ -434,7 +434,6 @@
                      :else 1)
                    (cond
                      (= j 0) 1.2 ;; Increase top row height for keyswitch pcb clearance
-                     (= [i j] [0 3]) 1.1 ;; Increase inner col last row's height
                      :else 1)
                    1]
 
