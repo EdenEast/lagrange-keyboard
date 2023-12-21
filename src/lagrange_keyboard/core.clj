@@ -239,7 +239,7 @@
 (def stand-shape-factor 0)               ; 0 is radial extrusion, 1 is projection.
 (def stand-width 25/2)                   ; The width of the strip forming the stand cross-section.
 (def stand-minimum-thickness [6 4 4/10]) ; Thickness at inner bottom, inner top and outer bottom.
-(def stand-boss-indexes [0 3, 1 8])      ; The screw bosses shared by the stand.
+(def stand-boss-indexes [0 3, 1 7])      ; The screw bosses shared by the stand.
 (def stand-split-points [15 51])         ; The locations where the arms begin.
 (def stand-arm-lengths [3 11, 2 6])      ; Hom much to shorten the arms.
 (def stand-arm-slope (degrees 13))
