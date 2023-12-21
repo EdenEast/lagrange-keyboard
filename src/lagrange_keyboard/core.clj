@@ -2077,6 +2077,7 @@
          ;; Slot
 
          (->> (sphere ε)
+              (scale [1 1.4 1])
               (translate [(* u 50) (* t (- (/ D 2) ε)) (+ l_2 (- l_1) (* s 100) ε)])
               (for [s [0 1] t [-1 1] u [-1 1]])
               (apply hull))
