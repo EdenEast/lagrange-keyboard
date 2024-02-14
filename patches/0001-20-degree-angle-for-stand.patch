@@ -1,0 +1,48 @@
+From f515fe1b50f293281abb0267d6e7ae4a995bd239 Mon Sep 17 00:00:00 2001
+From: EdenEast <edenofest@gmail.com>
+Date: Wed, 14 Feb 2024 18:10:50 -0500
+Subject: [PATCH] 20 degree angle for stand
+
+---
+ src/lagrange_keyboard/core.clj | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/lagrange_keyboard/core.clj b/src/lagrange_keyboard/core.clj
+index ee91444..7da23bb 100644
+--- a/src/lagrange_keyboard/core.clj
++++ b/src/lagrange_keyboard/core.clj
+@@ -235,11 +235,11 @@
+ ;; real estate, although this should be avoided, unless a bridge is
+ ;; installed.
+ 
+-(def stand-tenting-angle (degrees 35))   ; The angle of extrusion.
++(def stand-tenting-angle (degrees 20))   ; The angle of extrusion.
+ (def stand-shape-factor 0)               ; 0 is radial extrusion, 1 is projection.
+ (def stand-width 25/2)                   ; The width of the strip forming the stand cross-section.
+ (def stand-minimum-thickness [6 4 4/10]) ; Thickness at inner bottom, inner top and outer bottom.
+-(def stand-boss-indexes [0 3, 1 7])      ; The screw bosses shared by the stand.
++(def stand-boss-indexes [0 3, 2 8, 1 7]) ; The screw bosses shared by the stand.
+ (def stand-split-points [15 51])         ; The locations where the arms begin.
+ (def stand-arm-lengths [3 11, 2 6])      ; Hom much to shorten the arms.
+ (def stand-arm-slope (degrees 13))
+@@ -1781,7 +1781,7 @@
+     (boss-place x d endpoints (translate [0 0 -3/2]
+                                          (countersink (/ cover-countersink-diameter 2)
+                                                       cover-countersink-height
+-                                                      50 20)))))
++                                                      50 50)))))
+ 
+ ;;;;;;;;;;;;
+ ;; Bridge ;;
+@@ -2398,7 +2398,7 @@
+                                    (take-that 1)
+                                    (apply hull)))))
+ 
+-                    [upper-parts lower-parts] (split-at 4 parts)]
++                    [upper-parts lower-parts] (split-at 1000 parts)]
+ 
+                 (apply union
+                        (difference
+-- 
+2.35.0.windows.1
+
